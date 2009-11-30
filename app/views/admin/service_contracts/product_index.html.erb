@@ -1,0 +1,28 @@
+<%= render :partial => 'admin/shared/product_sub_menu' %>
+
+<%= render :partial => 'admin/shared/product_tabs', :locals => {:current => "service_contracts"} %>
+<div id="product_service_contracts">
+  <%= render :partial => "service_contracts_table", :locals => {:service_contracts => @service_contracts} %>
+</div>
+
+<% form_tag('#') do %>
+  <label><%= t('search') %>:</label>
+  <input id="searchtext" size="25">
+<% end %>
+
+<br/>
+<div id="search_hits"></div>
+<% javascript_tag do %>
+  function search_for_contracts(){
+    $.ajax({
+     data: {q: $("#searchtext").val() }, 
+     success: function(request){
+       $('#search_hits').html(request);
+     }, 
+     type: 'post', 
+     url: '<%= available_admin_product_service_contracts_url(@product) %>'
+    });    
+  }
+<% end -%>
+<%= javascript_include_tag 'service_contracts' %>
+

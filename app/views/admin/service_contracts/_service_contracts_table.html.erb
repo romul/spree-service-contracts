@@ -1,0 +1,26 @@
+<table class="index">
+  <thead>
+  	<tr>
+  		<th><%= t("name") %></th>
+  		<th><%= t("price") %></th>
+  		<th></th>
+  	</tr>
+  </thead>
+  <tbody>
+    <% service_contracts.each do |contract| %>
+      <tr id="<%= dom_id(contract, :sel)%>">
+        <td><%= contract.name %></td>
+        <td><%= number_to_currency(contract.price) %></td>
+  	    <td class="actions">
+          <%= image_tag "spinner.gif", :style => "display:none", :class => "spinner" %>
+          <%= link_to(icon('delete') + ' ' + t('remove'), 
+                      remove_admin_product_service_contract_url(@product, contract),
+                      :class => "remove_admin_product_contract_link") %>             
+  	    </td>        
+      </tr>
+    <% end %>
+    <% if service_contracts.empty? %>
+     <tr><td colspan="3"><%= t('none') %>.</td></tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,42 @@
+<script type="text/javascript">
+  function displayRow(){
+    var row = document.getElementById("captionRow");
+    if (row.style.display == '') row.style.display = 'none';
+    else row.style.display = '';
+  }
+</script>
+<h4><%= t('available_service_contracts') %></h4>
+<table class="index">
+	<thead>
+		<tr>
+  		<th><%= t("name") %></th>
+  		<th><%= t("price") %></th>
+  		<th></th>
+		</tr>
+	</thead>
+	<tbody>
+    <% @available_contracts.each do |contract| %>
+      <tr id="<%= dom_id(contract) %>">
+        
+        <td><%= contract.name %></td>
+        <td><%= contract.price %></td>
+		    <td class="actions">
+          <%= image_tag "spinner.gif", :style => "display:none", :class => "spinner" %>
+		      <%= link_to(icon('add') + ' ' + t('select'), 
+		                  select_admin_product_service_contract_path(@product, contract),
+		                  :class => "select_service_contract_link") %>
+		    </td>           
+      </tr>
+    <% end %>
+    <% if @available_contracts.empty? %>
+     <tr><td colspan="3"><%= t('no_match_found') %>.</td></tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% javascript_tag do %>
+  $("a.select_service_contract_link").click(function(){
+    $(this).parent().parent().hide();
+    return make_post_request($(this), {});    
+  });  
+<% end %>  

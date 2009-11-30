@@ -1,0 +1,32 @@
+<div class='toolbar'>
+  <ul class='actions'>
+    <li>
+      <%= button_link_to t("new_service_contract"), new_object_url, :icon => 'add'  %>
+    </li>
+  </ul>
+  <br class='clear' />
+</div>
+
+<h1><%= t("service_contracts") %></h1>
+
+<table class="index">
+  <thead>
+    <th><%= t("name") %></th>
+    <th><%= t("price") %></th>
+    <th><%= t("action") %></th>
+  </thead>
+  <tbody>
+    <% @service_contracts.each do |service_contract|%>
+    <tr id="<%= dom_id service_contract %>">
+      <td><%= service_contract.name %></td>
+      <td><%= number_to_currency(service_contract.price) %></td>  
+      <td>
+      	<%= link_to_edit service_contract %> &nbsp;
+      	<%= link_to_delete service_contract %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+      
